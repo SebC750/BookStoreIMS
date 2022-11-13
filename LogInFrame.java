@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.awt.event.ActionEvent;
 
 public class LogInFrame {
+
     // Create the components for the JPanel
     // ---------------------------------------------------------------------------------------------//
     ActionListener goToMenu = new ClickListener();
@@ -35,10 +36,12 @@ public class LogInFrame {
 
         signInMessage.setFont(new Font("Monospaced", Font.BOLD, 24));
         signInMessage.setForeground(new Color(30, 50, 190));
+
         // When the user logs in, it will remove the previous panel and load up a new
         // one. This is so that there aren't multiple frames running at once and to
         // avoid having to delete each one manually. Reduces clutter for the user.
         // ---------------------------------------------------------------------------------------------//
+        
         logInButton.addActionListener(goToMenu);
         logInButton.addActionListener(e -> {
             logInFrame.dispose();
