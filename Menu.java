@@ -13,12 +13,14 @@ public class Menu {
     JPanel salesStatisticsOption = new JPanel();
     JPanel inventoryOption = new JPanel();
     JPanel transactionHistoryOption = new JPanel();
+    JPanel logOffOption = new JPanel();
 
     JLabel menuTitleText = new JLabel("IMS Menu");
 
-    JButton salesStatisticsButton = new JButton("IMS Menu");
-    JButton inventoryButton = new JButton("Sales Statistics");
+    JButton salesStatisticsButton = new JButton("Sales statistics");
+    JButton inventoryButton = new JButton("Inventory");
     JButton transactionHistoryButton = new JButton("Transaction History");
+    JButton logOffButton = new JButton("Log off");
 
     public Menu(){
         //Creating the frame for the menu screen.
@@ -39,11 +41,13 @@ public class Menu {
         menuTitleText.setBounds(175,20,200,50);
         menuTitleText.setFont(new Font("Monospaced", Font.BOLD, 30));       
         inventoryOption.setBounds(150,150,200,50);
-        inventoryOption.setBackground(new Color(130,120,220));
+        inventoryOption.setBackground(new Color(150,20,100));
         salesStatisticsOption.setBounds(150, 200, 200, 50);
         salesStatisticsOption.setBackground(new Color(175,200,100));       
         transactionHistoryOption.setBounds(150,250,200,50);
         transactionHistoryOption.setBackground(new Color(20,20,200));
+        logOffOption.setBounds(300,400,150,50);
+        logOffOption.setBackground(new Color(150,20,50));
         
         //-------------------------------------------------------------------------------------------------------------//
 
@@ -56,6 +60,8 @@ public class Menu {
         salesStatisticsOption.add(salesStatisticsButton);
         
         transactionHistoryOption.add(transactionHistoryButton);
+
+        logOffOption.add(logOffButton);
         //-------------------------------------------------------------------------------------------------------------//
 
         //Defining the behavior of each button and what frames they will lead to.
@@ -90,11 +96,23 @@ public class Menu {
         transactionHistoryButton.addActionListener(e -> {
             menuFrame.dispose();
         });
+        ActionListener goBack = new goBackToLogin();
+        logOffButton.addActionListener(goBack);
+        logOffButton.setOpaque(false);
+        logOffButton.setContentAreaFilled(false);
+        logOffButton.setBorderPainted(false);
+        logOffButton.setFont(new Font("Monospaced", Font.BOLD, 15));
+        logOffButton.setForeground(Color.WHITE);
+        logOffButton.addActionListener(e -> {
+            menuFrame.dispose();
+        });
+
         //-------------------------------------------------------------------------------------------------------------//
 
         //Compile all the panels and add them to the frame to be displayed.
         //-------------------------------------------------------------------------------------------------------------//
         menuFrame.add(menuTitle);
+        menuFrame.add(logOffOption);
         menuFrame.add(inventoryOption);
         menuFrame.add(salesStatisticsOption);      
         menuFrame.add(transactionHistoryOption);
@@ -118,6 +136,11 @@ public class Menu {
     class goToTransactions implements ActionListener{
         public void actionPerformed(ActionEvent e){
               TransactionHistory newTransactionsHistory = new TransactionHistory();
+        }
+    }
+    class goBackToLogin implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+              LogInFrame returnToLogIn = new LogInFrame();
         }
     }
     //-------------------------------------------------------------------------------------------------------------//
