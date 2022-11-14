@@ -41,7 +41,7 @@ public class LogInFrame {
         // one. This is so that there aren't multiple frames running at once and to
         // avoid having to delete each one manually. Reduces clutter for the user.
         // ---------------------------------------------------------------------------------------------//
-        
+
         logInButton.addActionListener(goToMenu);
         logInButton.addActionListener(e -> {
             logInFrame.dispose();

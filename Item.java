@@ -3,34 +3,43 @@ public class Item {
     private String name;
     private double price;
     private int quantity;
-    public Item(int id, String n, double p, int q){
+
+    public Item(int id, String n, double p, int q) {
         this.ID = id;
         this.name = n;
         this.price = p;
         this.quantity = q;
     }
-    public void setID(int i){
+
+    public void setID(int i) {
         this.ID = i;
     }
-    public void setName(String na){
+
+    public void setName(String na) {
         this.name = na;
     }
-    public void setPrice(double pr){
+
+    public void setPrice(double pr) {
         this.price = pr;
     }
-    public void setQuantity(int qu){
+
+    public void setQuantity(int qu) {
         this.quantity = qu;
     }
-    public int getID(){
+
+    public int getID() {
         return ID;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    public double getPrice(){
+
+    public double getPrice() {
         return price;
     }
-    public int getQuantity(){
+
+    public int getQuantity() {
         return quantity;
     }
 }
