@@ -28,7 +28,7 @@ public class StoreStatisticsFrame {
         statsFrame.setLayout(null);
 
         statsTitle.setBounds(0, 0, 1200, 100);
-        statsTitle.setBackground(new Color(150, 50, 50));
+        statsTitle.setBackground(new Color(20,200,100));
         statsTitle.setLayout(null);
         statsTitleText.setForeground(new Color(255, 255, 255));
         statsTitleText.setBounds(500, 20, 300, 50);
@@ -38,7 +38,7 @@ public class StoreStatisticsFrame {
         tableDisplay.setBounds(350, 100, 500, 450);
         tableDisplay.setBackground(new Color(200, 200, 200));
         goBackOption.setBounds(500, 550, 200, 50);
-        goBackOption.setBackground(new Color(150, 50, 50));
+        goBackOption.setBackground(new Color(20,200,100));
         goBackOption.add(goBackButton);
 
         Inventory newInv = new Inventory();

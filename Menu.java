@@ -39,15 +39,16 @@ public class Menu {
         menuTitle.setLayout(null);
         menuTitle.setBounds(0, 0, 500, 100);
         menuTitleText.setBounds(175,20,200,50);
-        menuTitleText.setFont(new Font("Monospaced", Font.BOLD, 30));       
+        menuTitleText.setFont(new Font("Monospaced", Font.BOLD, 30));      
+        menuTitleText.setForeground(new Color(255, 255, 255));
         inventoryOption.setBounds(150,150,200,50);
         inventoryOption.setBackground(new Color(150,20,100));
         salesStatisticsOption.setBounds(150, 200, 200, 50);
-        salesStatisticsOption.setBackground(new Color(175,200,100));       
+        salesStatisticsOption.setBackground(new Color(20,200,100));       
         transactionHistoryOption.setBounds(150,250,200,50);
         transactionHistoryOption.setBackground(new Color(20,20,200));
         logOffOption.setBounds(300,400,150,50);
-        logOffOption.setBackground(new Color(150,20,50));
+        logOffOption.setBackground(new Color(20, 150, 150));
         
         //-------------------------------------------------------------------------------------------------------------//
 
