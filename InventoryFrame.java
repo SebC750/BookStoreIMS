@@ -37,6 +37,7 @@ public class InventoryFrame {
         goBackOption.add(goBackButton);
         tableDisplay.setBounds(350, 100, 500, 450);
         tableDisplay.setBackground(new Color(200, 200, 200));
+        
         Inventory newInv = new Inventory();
         final ArrayList<Item> tableInventory = newInv.getAllItems();
         if (tableInventory.size() == 0) {

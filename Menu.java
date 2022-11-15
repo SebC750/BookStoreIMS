@@ -130,12 +130,12 @@ public class Menu {
     }
     class goToStatistics implements ActionListener{
         public void actionPerformed(ActionEvent e){
-              StoreStatistics newStoreStatistics = new StoreStatistics();
+              StoreStatisticsFrame newStoreStatistics = new StoreStatisticsFrame();
         }
     }
     class goToTransactions implements ActionListener{
         public void actionPerformed(ActionEvent e){
-              TransactionHistory newTransactionsHistory = new TransactionHistory();
+              TransactionHistoryFrame newTransactionsHistory = new TransactionHistoryFrame();
         }
     }
     class goBackToLogin implements ActionListener{

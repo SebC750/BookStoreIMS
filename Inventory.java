@@ -5,10 +5,9 @@ import java.awt.event.ActionEvent;
 import java.util.*;
 
 public class Inventory {
-    ArrayList<Item> inventory;
-
+    ArrayList<Item> inventory = new ArrayList<Item>();
+    
     public Inventory() {
-        inventory = new ArrayList<Item>();
         addTestValues();
     }
 
