@@ -13,7 +13,7 @@ public class index {
 		Class.forName("com.mysql.cj.jdbc.Driver");
         Connection connectToDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/IMS_Database", "root","root");
 		Statement query = connectToDB.createStatement();
-		ResultSet retrievedData = query.executeQuery("select name from item");
+		ResultSet retrievedData = query.executeQuery("select * from item");
 		while(retrievedData.next()){
 			System.out.println(retrievedData.getString(1));
 		}

@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import java.util.*;
-
+import java.sql.*;
 public class StoreStatisticsFrame {
     JFrame statsFrame = new JFrame();
 
@@ -17,7 +17,7 @@ public class StoreStatisticsFrame {
 
     JButton goBackButton = new JButton("Go Back");
 
-    JTable allInventory;
+    JTable allStats;
 
     public StoreStatisticsFrame() {
         statsFrame.setSize(1200, 1200);
@@ -40,42 +40,18 @@ public class StoreStatisticsFrame {
         goBackOption.setBounds(500, 550, 200, 50);
         goBackOption.setBackground(new Color(20,200,100));
         goBackOption.add(goBackButton);
-
-        Inventory newInv = new Inventory();
-        final ArrayList<Item> tableInventory = newInv.getAllItems();
-        if (tableInventory.size() == 0) {
-            tableDisplay.add(noItemsAvailableText);
-        } else {
-            allInventory = new JTable(25, 4);
-            String[] headers = { "Item ID", "Item name", "Item price", "Item Quantity" };
-            for (int i = 0; i < headers.length; i++) {
-                allInventory.setValueAt(headers[i], 0, i);
-
-            }
-            int x = 25;
-            if (tableInventory.size() < x) {
-                x = tableInventory.size();
-            }
-            for (int i = 0; i < x; i++) {
-                allInventory.setValueAt(tableInventory.get(i).getID(), i + 1, 0);
-                allInventory.setValueAt(tableInventory.get(i).getName(), i + 1, 1);
-                allInventory.setValueAt(tableInventory.get(i).getPrice(), i + 1, 2);
-                allInventory.setValueAt(tableInventory.get(i).getQuantity(), i + 1, 3);
-
-            }
-            allInventory.setBounds(15, 25, 720, 175);
-            tableDisplay.add(allInventory);
-            ActionListener goBack = new goBackToMenu();
-            goBackButton.addActionListener(goBack);
-            goBackButton.setOpaque(false);
-            goBackButton.setContentAreaFilled(false);
-            goBackButton.setBorderPainted(false);
-            goBackButton.setFont(new Font("Monospaced", Font.BOLD, 15));
-            goBackButton.setForeground(Color.WHITE);
-            goBackButton.addActionListener(e -> {
-                statsFrame.dispose();
-            });
-
+        getStats();
+        
+        ActionListener goBack = new goBackToMenu();
+        goBackButton.addActionListener(goBack);
+        goBackButton.setOpaque(false);
+        goBackButton.setContentAreaFilled(false);
+        goBackButton.setBorderPainted(false);
+        goBackButton.setFont(new Font("Monospaced", Font.BOLD, 15));
+        goBackButton.setForeground(Color.WHITE);
+        goBackButton.addActionListener(e -> {
+            statsFrame.dispose();
+        });
             statsFrame.add(statsTitle);
             statsFrame.add(goBackOption);
             statsFrame.add(tableDisplay);
@@ -83,11 +59,39 @@ public class StoreStatisticsFrame {
             statsFrame.setVisible(true);
         }
 
-    }
+    
 
     class goBackToMenu implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             Menu backToMenu = new Menu();
+        }
+    }
+    public void getStats() {
+        try {
+            allStats = new JTable(25, 2);
+            String[] headers = { "Item ID", "Number of purchases"};
+            for (int i = 0; i < headers.length; i++) {
+                allStats.setValueAt(headers[i], 0, i);
+
+            }
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connectToDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/IMS_Database", "root",
+                    "root");
+            Statement query = connectToDB.createStatement();
+            ResultSet retrievedData = query.executeQuery("select * from stats");
+            int i = 0;
+            while (retrievedData.next()) {
+                allStats.setValueAt(retrievedData.getString(1), i + 1, 0);
+                allStats.setValueAt(retrievedData.getString(2), i + 1, 1);
+                i++;
+            }
+            connectToDB.close();
+            allStats.setBounds(15, 25, 720, 175);
+            tableDisplay.add(allStats);
+        }
+
+        catch (Exception e1) {
+            e1.printStackTrace();
         }
     }
 }

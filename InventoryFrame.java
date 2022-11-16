@@ -3,18 +3,25 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import java.util.*;
-
+import java.sql.*;
+import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 public class InventoryFrame {
     JFrame inventoryFrame = new JFrame();
 
     JPanel invTitle = new JPanel();
     JPanel goBackOption = new JPanel();
     JPanel tableDisplay = new JPanel();
+    JPanel testDisplay = new JPanel();
+    JPanel showData = new JPanel();
 
     JLabel invTitleText = new JLabel("Inventory");
     JLabel noItemsAvailableText = new JLabel("No items available");
+    JLabel testText;
 
     JButton goBackButton = new JButton("Go back");
+    JButton testButton = new JButton("Get data");
     JTable allInventory;
 
     public InventoryFrame() {
@@ -37,32 +44,11 @@ public class InventoryFrame {
         goBackOption.add(goBackButton);
         tableDisplay.setBounds(350, 100, 500, 450);
         tableDisplay.setBackground(new Color(200, 200, 200));
+        testDisplay.setBounds(800, 550, 200, 50);
+        testDisplay.setBackground(new Color(150, 50, 50));
+        testDisplay.add(testButton);
+        getInventory();
         
-        Inventory newInv = new Inventory();
-        final ArrayList<Item> tableInventory = newInv.getAllItems();
-        if (tableInventory.size() == 0) {
-            tableDisplay.add(noItemsAvailableText);
-        } else {
-            allInventory = new JTable(25, 4);
-            String[] headers = { "Item ID", "Item name", "Item price", "Item Quantity" };
-            for (int i = 0; i < headers.length; i++) {
-                allInventory.setValueAt(headers[i], 0, i);
-
-            }
-            int x = 25;
-            if (tableInventory.size() < x) {
-                x = tableInventory.size();
-            }
-            for (int i = 0; i < x; i++) {
-                allInventory.setValueAt(tableInventory.get(i).getID(), i + 1, 0);
-                allInventory.setValueAt(tableInventory.get(i).getName(), i + 1, 1);
-                allInventory.setValueAt(tableInventory.get(i).getPrice(), i + 1, 2);
-                allInventory.setValueAt(tableInventory.get(i).getQuantity(), i + 1, 3);
-
-            }
-            allInventory.setBounds(15, 25, 720, 175);
-            tableDisplay.add(allInventory);
-        }
         ActionListener goBack = new goBackToMenu();
         goBackButton.addActionListener(goBack);
         goBackButton.setOpaque(false);
@@ -74,6 +60,7 @@ public class InventoryFrame {
             inventoryFrame.dispose();
         });
 
+        inventoryFrame.add(testDisplay);
         inventoryFrame.add(invTitle);
         inventoryFrame.add(tableDisplay);
         inventoryFrame.add(goBackOption);
@@ -85,6 +72,57 @@ public class InventoryFrame {
     class goBackToMenu implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             Menu backToMenu = new Menu();
+        }
+    }
+    /* 
+    public void readCSVFile(String s){
+        ArrayList<Item> importData = new ArrayList<Item>();
+        Path pathToCSV = Paths.get(s);
+        try {
+            BufferedReader readCSV = new BufferedReader(pathToCSV);
+            
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    */
+    public void addInventory() {
+        try {
+            
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
+    public void getInventory() {
+        try {
+            allInventory = new JTable(25, 4);
+            String[] headers = { "Item ID", "Item name", "Item price", "Item Quantity" };
+            for (int i = 0; i < headers.length; i++) {
+                allInventory.setValueAt(headers[i], 0, i);
+
+            }
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connectToDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/IMS_Database", "root",
+                    "root");
+            Statement query = connectToDB.createStatement();
+            ResultSet retrievedData = query.executeQuery("select * from item");
+            int i = 0;
+            while (retrievedData.next()) {
+                allInventory.setValueAt(retrievedData.getString(1), i + 1, 0);
+                allInventory.setValueAt(retrievedData.getString(2), i + 1, 1);
+                allInventory.setValueAt(retrievedData.getString(3), i + 1, 2);
+                allInventory.setValueAt(retrievedData.getString(4), i + 1, 3);
+                i++;
+            }
+            connectToDB.close();
+            allInventory.setBounds(15, 25, 720, 175);
+            tableDisplay.add(allInventory);
+        }
+
+        catch (Exception e1) {
+            e1.printStackTrace();
         }
     }
 }

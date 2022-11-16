@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.ActionEvent;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class TransactionHistoryFrame {
@@ -36,31 +37,8 @@ public class TransactionHistoryFrame {
         historyDisplay.setBackground(new Color(200, 200, 200));
         historyTitle.add(historyTitleText);
         goBackOption.add(goBackButton);
+        getTransactions();
         
-        TransactionList newList = new TransactionList();
-        final ArrayList<Transaction> tableTransaction = newList.getAllItems();
-        if (tableTransaction.size() == 0) {
-            historyDisplay.add(noItemsAvailableText);
-        } else {
-            allTransactions = new JTable(25, 4);
-            String[] headers = { "Transaction ID", "Item Description", "Item Quantity" };
-            for (int i = 0; i < headers.length; i++) {
-                allTransactions.setValueAt(headers[i], 0, i);
-
-            }
-            int x = 25;
-            if (tableTransaction.size() < x) {
-                x = tableTransaction.size();
-            }
-            for (int i = 0; i < x; i++) {
-                allTransactions.setValueAt(tableTransaction.get(i).getTransactionID(), i + 1, 0);
-                allTransactions.setValueAt(tableTransaction.get(i).getPurchasedItem(), i + 1, 1);
-                allTransactions.setValueAt(tableTransaction.get(i).getQuantity(), i + 1, 2);
-
-            }
-            allTransactions.setBounds(15, 25, 720, 175);
-            historyDisplay.add(allTransactions);
-        }
         ActionListener goBack = new goBackToMenu();
         goBackButton.addActionListener(goBack);
         goBackButton.setOpaque(false);
@@ -77,10 +55,49 @@ public class TransactionHistoryFrame {
         transactionFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         transactionFrame.setVisible(true);
     }
-    
     class goBackToMenu implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             Menu backToMenu = new Menu();
+        }
+    }
+    public void readCSVFile(){
+
+    }
+    public void addInventory() {
+        try {
+            
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
+
+    public void getTransactions() {
+        try {
+            allTransactions = new JTable(25, 3);
+            String[] headers = { "Transaction ID", "Quantity", "Item ID"};
+            for (int i = 0; i < headers.length; i++) {
+                allTransactions.setValueAt(headers[i], 0, i);
+
+            }
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connectToDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/IMS_Database", "root",
+                    "root");
+            Statement query = connectToDB.createStatement();
+            ResultSet retrievedData = query.executeQuery("select * from transactions");
+            int i = 0;
+            while (retrievedData.next()) {
+                allTransactions.setValueAt(retrievedData.getString(1), i + 1, 0);
+                allTransactions.setValueAt(retrievedData.getString(2), i + 1, 1);
+                allTransactions.setValueAt(retrievedData.getString(3), i + 1, 2);
+                i++;
+            }
+            connectToDB.close();
+            allTransactions.setBounds(15, 25, 720, 175);
+            historyDisplay.add(allTransactions);
+        }
+
+        catch (Exception e1) {
+            e1.printStackTrace();
         }
     }
 }
