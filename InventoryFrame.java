@@ -7,21 +7,23 @@ import java.sql.*;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 public class InventoryFrame {
     JFrame inventoryFrame = new JFrame();
 
     JPanel invTitle = new JPanel();
     JPanel goBackOption = new JPanel();
     JPanel tableDisplay = new JPanel();
-    JPanel testDisplay = new JPanel();
     JPanel showData = new JPanel();
+    JPanel addItemDisplay = new JPanel();
 
     JLabel invTitleText = new JLabel("Inventory");
     JLabel noItemsAvailableText = new JLabel("No items available");
-    JLabel testText;
+    
 
     JButton goBackButton = new JButton("Go back");
-    JButton testButton = new JButton("Get data");
+   
+    JButton addItemButton = new JButton("Add item");
     JTable allInventory;
 
     public InventoryFrame() {
@@ -44,9 +46,8 @@ public class InventoryFrame {
         goBackOption.add(goBackButton);
         tableDisplay.setBounds(350, 100, 500, 450);
         tableDisplay.setBackground(new Color(200, 200, 200));
-        testDisplay.setBounds(800, 550, 200, 50);
-        testDisplay.setBackground(new Color(150, 50, 50));
-        testDisplay.add(testButton);
+        
+       
         getInventory();
         
         ActionListener goBack = new goBackToMenu();
@@ -60,7 +61,7 @@ public class InventoryFrame {
             inventoryFrame.dispose();
         });
 
-        inventoryFrame.add(testDisplay);
+        
         inventoryFrame.add(invTitle);
         inventoryFrame.add(tableDisplay);
         inventoryFrame.add(goBackOption);
@@ -75,26 +76,35 @@ public class InventoryFrame {
         }
     }
     /* 
-    public void readCSVFile(String s){
+    public void readCSVFile(String s) throws IOException{
         ArrayList<Item> importData = new ArrayList<Item>();
         Path pathToCSV = Paths.get(s);
+        String line = "";
         try {
-            BufferedReader readCSV = new BufferedReader(pathToCSV);
-            
-
-        } catch (FileNotFoundException e) {
+            BufferedReader br = new BufferedReader(new FileReader("CSVDemo.csv"));  
+            while ((line = br.readLine()) != null)   
+{  
+            String[] item = line.split(",");
+            System.out.println("")
+        }
+    }
+         catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    
+    
     }
     */
-    public void addInventory() {
+class addNewItem implements ActionListener{
+    public void actionPerformed(ActionEvent e) {
         try {
             
-        } catch (Exception e) {
+        } catch (Exception e1) {
             // TODO: handle exception
         }
     }
+}
     public void getInventory() {
         try {
             allInventory = new JTable(25, 4);

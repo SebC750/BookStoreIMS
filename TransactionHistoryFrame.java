@@ -60,6 +60,7 @@ public class TransactionHistoryFrame {
             Menu backToMenu = new Menu();
         }
     }
+    /* 
     public void readCSVFile(){
 
     }
@@ -70,7 +71,7 @@ public class TransactionHistoryFrame {
             // TODO: handle exception
         }
     }
-
+    */
     public void getTransactions() {
         try {
             allTransactions = new JTable(25, 3);
@@ -84,13 +85,23 @@ public class TransactionHistoryFrame {
                     "root");
             Statement query = connectToDB.createStatement();
             ResultSet retrievedData = query.executeQuery("select * from transactions");
+            Statement increment = connectToDB.createStatement();
+            int numOfPurchasesIncremented;
+            String num;
+            String getItemId;
             int i = 0;
             while (retrievedData.next()) {
                 allTransactions.setValueAt(retrievedData.getString(1), i + 1, 0);
                 allTransactions.setValueAt(retrievedData.getString(2), i + 1, 1);
                 allTransactions.setValueAt(retrievedData.getString(3), i + 1, 2);
+                num = retrievedData.getString(2);
+                getItemId = retrievedData.getString(3);
+                System.out.println("update stats set numOfPurchases = numOfPurchases + "+num+" where item_id = "+getItemId+"");
+                numOfPurchasesIncremented = increment.executeUpdate("update stats set numOfPurchases = numOfPurchases + "+num+" where item_id = "+getItemId+"");
+                
                 i++;
             }
+
             connectToDB.close();
             allTransactions.setBounds(15, 25, 720, 175);
             historyDisplay.add(allTransactions);

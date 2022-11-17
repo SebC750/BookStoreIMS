@@ -66,6 +66,7 @@ public class StoreStatisticsFrame {
             Menu backToMenu = new Menu();
         }
     }
+    
     public void getStats() {
         try {
             allStats = new JTable(25, 2);
